@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
- com.cq.mqtt.autoconfigure.MqttAutoConfiguration
+ cn.alotus.mqtt.autoconfigure.MqttAutoConfiguration
