@@ -1,5 +1,11 @@
 package com.cq.mqtt.retry;
 
+/**
+ * 重试上下文，封装了重试操作的相关信息
+ * 
+ * @author alotuser
+ * @since 2025/5/10
+ */
 public class RetryContext {
 	private final int attemptCount;
 	private final long firstAttemptTime;

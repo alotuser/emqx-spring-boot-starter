@@ -16,7 +16,10 @@ import com.cq.mqtt.retry.RetryPolicy;
 import com.cq.mqtt.retry.RetryTemplate;
 
 /**
- * MQTT操作模板类，提供发布和订阅功能
+ * MQTT 模板类，封装了 MQTT 发布和订阅的核心操作，提供简化的接口供应用程序使用
+ * 
+ * @author alotuser
+ * @since 2025/5/10
  */
 public class MqttTemplate {
 
@@ -26,10 +29,24 @@ public class MqttTemplate {
 	private final RetryPolicy publishRetryPolicy;
 	private final MqttProperties properties;
 
+	
+	private final String POLICY_TYPE="publish";
+	
+	public MqttTemplate(SubscriptionManager subscriptionManager) {
+		this.clientFactory = subscriptionManager.getClientFactory();
+		this.properties = clientFactory.getProperties();
+		this.publishRetryPolicy = new MqttRetryPolicy(properties.getRetry(), POLICY_TYPE);
+	}
+	public MqttTemplate(MqttClientFactory clientFactory) {
+		this.clientFactory = clientFactory;
+		this.properties = clientFactory.getProperties();
+		this.publishRetryPolicy = new MqttRetryPolicy(properties.getRetry(), POLICY_TYPE);
+	}
+	
 	public MqttTemplate(MqttClientFactory clientFactory, MqttProperties properties) {
 		this.clientFactory = clientFactory;
 		this.properties = properties;
-		this.publishRetryPolicy = new MqttRetryPolicy(properties.getRetry(), "publish");
+		this.publishRetryPolicy = new MqttRetryPolicy(properties.getRetry(), POLICY_TYPE);
 	}
 
 	public void publish(String topic, byte[] payload, int qos, boolean retained) {

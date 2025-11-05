@@ -8,7 +8,12 @@ import com.cq.mqtt.config.MqttProperties;
 import com.cq.mqtt.retry.RetryContext;
 import com.cq.mqtt.retry.RetryPolicy;
 
-//MqttRetryPolicy.java
+/**
+ * MQTT 重试策略实现，根据配置的重试策略和参数决定是否进行重试以及重试间隔时间
+ * 
+ * @author alotuser
+ * @since 2025/5/10
+ */
 public class MqttRetryPolicy implements RetryPolicy {
 
 	private static final Logger logger = LoggerFactory.getLogger(MqttRetryPolicy.class);

@@ -1,7 +1,11 @@
 package com.cq.mqtt.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
+/**
+ * MQTT 配置属性类
+ * @author alotuser
+ * @since 2025/5/10
+ */
 @ConfigurationProperties(prefix = "emqx.mqtt")
 public class MqttProperties {
 

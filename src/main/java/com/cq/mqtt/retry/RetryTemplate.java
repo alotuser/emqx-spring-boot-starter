@@ -5,6 +5,12 @@ import java.util.concurrent.CompletableFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 重试模板类，提供执行带重试操作的功能
+ * 
+ * @author alotuser
+ * @since 2025/5/10
+ */
 public class RetryTemplate {
 
 	private static final Logger logger = LoggerFactory.getLogger(RetryTemplate.class);

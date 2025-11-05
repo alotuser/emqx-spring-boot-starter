@@ -20,14 +20,22 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.util.StringUtils;
 
 import com.cq.mqtt.config.MqttProperties;
 import com.cq.mqtt.core.DefaultMqttClientFactory;
 import com.cq.mqtt.core.MqttClientFactory;
 import com.cq.mqtt.core.MqttTemplate;
+import com.cq.mqtt.core.SubscriptionManager;
 import com.cq.mqtt.listener.MqttMessageListenerProcessor;
 
+/**
+ * MQTT 自动配置类
+ *
+ * @author  alotuser
+ * @since 2025/5/10
+ */
 @Configuration
 @EnableConfigurationProperties(MqttProperties.class)
 @ConditionalOnClass(MqttClient.class)
@@ -95,17 +103,23 @@ public class MqttAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public MqttClientFactory mqttClientFactory(MqttProperties properties, MqttConnectOptions connectOptions) {
-		return new DefaultMqttClientFactory(properties, connectOptions);
+	public SubscriptionManager subscriptionManager(@Lazy MqttClientFactory clientFactory) {
+		return new SubscriptionManager(clientFactory);
 	}
 
 	@Bean
-	public MqttTemplate mqttTemplate(MqttClientFactory clientFactory, MqttProperties properties) {
+	@ConditionalOnMissingBean
+	public MqttClientFactory mqttClientFactory(MqttProperties properties, MqttConnectOptions connectOptions, @Lazy SubscriptionManager subscriptionManager) {
+		return new DefaultMqttClientFactory(properties, connectOptions, subscriptionManager);
+	}
+
+	@Bean
+	public MqttMessageListenerProcessor mqttMessageListenerProcessor(@Lazy SubscriptionManager subscriptionManager) {
+		return new MqttMessageListenerProcessor(subscriptionManager);
+	}
+
+	@Bean
+	public MqttTemplate mqttTemplate(@Lazy MqttClientFactory clientFactory, MqttProperties properties) {
 		return new MqttTemplate(clientFactory, properties);
-	}
-
-	@Bean
-	public MqttMessageListenerProcessor mqttMessageListenerProcessor(MqttClientFactory clientFactory) {
-		return new MqttMessageListenerProcessor(clientFactory);
 	}
 }

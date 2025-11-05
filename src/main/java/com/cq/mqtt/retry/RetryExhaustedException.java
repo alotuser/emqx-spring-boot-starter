@@ -1,5 +1,11 @@
 package com.cq.mqtt.retry;
 
+/**
+ * 重试耗尽异常，当所有重试尝试均失败时抛出此异常
+ * 
+ * @author alotuser
+ * @since 2025/5/10
+ */
 public class RetryExhaustedException extends RuntimeException {
 
 	/**

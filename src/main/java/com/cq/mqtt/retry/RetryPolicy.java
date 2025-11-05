@@ -1,5 +1,11 @@
 package com.cq.mqtt.retry;
 
+/**
+ * 重试策略接口，定义了重试的规则和行为
+ * 
+ * @author alotuser
+ * @since 2025/5/10
+ */
 public interface RetryPolicy {
     
     /**
