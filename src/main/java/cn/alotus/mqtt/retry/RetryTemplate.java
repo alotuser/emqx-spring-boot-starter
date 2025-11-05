@@ -18,6 +18,7 @@ public class RetryTemplate {
 	/**
 	 * 执行带重试的操作
 	 */
+	@SuppressWarnings("unused")
 	public static <T> T execute(RetryPolicy retryPolicy, RetryCallback<T> retryCallback) {
 		int attemptCount = 0;
 		long firstAttemptTime = System.currentTimeMillis();
