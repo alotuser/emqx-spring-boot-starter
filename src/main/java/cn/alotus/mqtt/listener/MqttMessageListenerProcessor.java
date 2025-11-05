@@ -1,4 +1,4 @@
-package com.cq.mqtt.listener;
+package cn.alotus.mqtt.listener;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -21,9 +21,9 @@ import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.stereotype.Component;
 
-import com.cq.mqtt.annotation.MqttTopic;
-import com.cq.mqtt.core.MqttMessageContext;
-import com.cq.mqtt.core.SubscriptionManager;
+import cn.alotus.mqtt.annotation.MqttTopic;
+import cn.alotus.mqtt.core.MqttMessageContext;
+import cn.alotus.mqtt.core.SubscriptionManager;
 
 /**
  * MQTT 消息监听器处理器，负责扫描 Spring 容器中的 Bean，查找使用 @MqttTopic 注解的方法， 并为这些方法注册 MQTT 主题订阅和消息监听器

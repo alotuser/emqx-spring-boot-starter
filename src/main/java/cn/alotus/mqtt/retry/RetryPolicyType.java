@@ -1,4 +1,4 @@
-package com.cq.mqtt.retry;
+package cn.alotus.mqtt.retry;
 
 /**
  * 操作类型枚举，定义了支持的操作类型

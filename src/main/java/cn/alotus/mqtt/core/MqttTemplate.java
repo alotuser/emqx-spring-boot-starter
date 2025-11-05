@@ -1,4 +1,4 @@
-package com.cq.mqtt.core;
+package cn.alotus.mqtt.core;
 
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
@@ -9,12 +9,12 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cq.mqtt.config.MqttProperties;
-import com.cq.mqtt.retry.RetryPolicyType;
-import com.cq.mqtt.retry.RetryCallback;
-import com.cq.mqtt.retry.RetryExhaustedException;
-import com.cq.mqtt.retry.RetryPolicy;
-import com.cq.mqtt.retry.RetryTemplate;
+import cn.alotus.mqtt.config.MqttProperties;
+import cn.alotus.mqtt.retry.RetryCallback;
+import cn.alotus.mqtt.retry.RetryExhaustedException;
+import cn.alotus.mqtt.retry.RetryPolicy;
+import cn.alotus.mqtt.retry.RetryPolicyType;
+import cn.alotus.mqtt.retry.RetryTemplate;
 
 /**
  * MQTT 模板类，封装了 MQTT 发布和订阅的核心操作，提供简化的接口供应用程序使用

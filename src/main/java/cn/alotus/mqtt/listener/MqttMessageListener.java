@@ -1,4 +1,4 @@
-package com.cq.mqtt.listener;
+package cn.alotus.mqtt.listener;
 
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 

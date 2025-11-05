@@ -1,4 +1,4 @@
-package com.cq.mqtt.annotation;
+package cn.alotus.mqtt.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

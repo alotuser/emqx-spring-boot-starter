@@ -1,4 +1,4 @@
-package com.cq.mqtt.retry;
+package cn.alotus.mqtt.retry;
 
 import java.util.concurrent.CompletableFuture;
 

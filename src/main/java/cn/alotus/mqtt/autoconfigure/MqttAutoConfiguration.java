@@ -1,4 +1,4 @@
-package com.cq.mqtt.autoconfigure;
+package cn.alotus.mqtt.autoconfigure;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -23,12 +23,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.util.StringUtils;
 
-import com.cq.mqtt.config.MqttProperties;
-import com.cq.mqtt.core.DefaultMqttClientFactory;
-import com.cq.mqtt.core.MqttClientFactory;
-import com.cq.mqtt.core.MqttTemplate;
-import com.cq.mqtt.core.SubscriptionManager;
-import com.cq.mqtt.listener.MqttMessageListenerProcessor;
+import cn.alotus.mqtt.config.MqttProperties;
+import cn.alotus.mqtt.core.DefaultMqttClientFactory;
+import cn.alotus.mqtt.core.MqttClientFactory;
+import cn.alotus.mqtt.core.MqttTemplate;
+import cn.alotus.mqtt.core.SubscriptionManager;
+import cn.alotus.mqtt.listener.MqttMessageListenerProcessor;
 
 /**
  * MQTT 自动配置类

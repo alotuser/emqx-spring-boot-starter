@@ -1,4 +1,4 @@
-package com.cq.mqtt.core;
+package cn.alotus.mqtt.core;
 
 import java.util.Collection;
 import java.util.Map;

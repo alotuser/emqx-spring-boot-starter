@@ -1,4 +1,4 @@
-package com.cq.mqtt.retry;
+package cn.alotus.mqtt.retry;
 
 /**
  * 重试策略接口，定义了重试的规则和行为

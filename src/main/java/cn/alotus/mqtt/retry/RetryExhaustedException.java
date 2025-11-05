@@ -1,4 +1,4 @@
-package com.cq.mqtt.retry;
+package cn.alotus.mqtt.retry;
 
 /**
  * 重试耗尽异常，当所有重试尝试均失败时抛出此异常

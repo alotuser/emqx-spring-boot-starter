@@ -1,13 +1,13 @@
-package com.cq.mqtt.core;
+package cn.alotus.mqtt.core;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cq.mqtt.config.MqttProperties;
-import com.cq.mqtt.retry.RetryPolicyType;
-import com.cq.mqtt.retry.RetryContext;
-import com.cq.mqtt.retry.RetryPolicy;
+import cn.alotus.mqtt.config.MqttProperties;
+import cn.alotus.mqtt.retry.RetryContext;
+import cn.alotus.mqtt.retry.RetryPolicy;
+import cn.alotus.mqtt.retry.RetryPolicyType;
 
 /**
  * MQTT 重试策略实现，根据配置的重试策略和参数决定是否进行重试以及重试间隔时间

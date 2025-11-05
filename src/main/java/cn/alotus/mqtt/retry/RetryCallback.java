@@ -1,4 +1,4 @@
-package com.cq.mqtt.retry;
+package cn.alotus.mqtt.retry;
 
 /**
  * 重试回调接口，定义了需要重试的操作

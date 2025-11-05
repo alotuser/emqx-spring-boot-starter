@@ -1,4 +1,4 @@
-package com.cq.mqtt.core;
+package cn.alotus.mqtt.core;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -15,13 +15,13 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cq.mqtt.config.MqttProperties;
-import com.cq.mqtt.retry.RetryPolicyType;
-import com.cq.mqtt.retry.RetryCallback;
-import com.cq.mqtt.retry.RetryContext;
-import com.cq.mqtt.retry.RetryExhaustedException;
-import com.cq.mqtt.retry.RetryPolicy;
-import com.cq.mqtt.retry.RetryTemplate;
+import cn.alotus.mqtt.config.MqttProperties;
+import cn.alotus.mqtt.retry.RetryCallback;
+import cn.alotus.mqtt.retry.RetryContext;
+import cn.alotus.mqtt.retry.RetryExhaustedException;
+import cn.alotus.mqtt.retry.RetryPolicy;
+import cn.alotus.mqtt.retry.RetryPolicyType;
+import cn.alotus.mqtt.retry.RetryTemplate;
 
 /**
  * 默认的 MQTT 客户端工厂实现，负责创建和管理 MQTT 客户端实例 包括连接管理、重连机制和订阅管理

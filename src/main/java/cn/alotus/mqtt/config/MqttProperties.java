@@ -1,4 +1,4 @@
-package com.cq.mqtt.config;
+package cn.alotus.mqtt.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
