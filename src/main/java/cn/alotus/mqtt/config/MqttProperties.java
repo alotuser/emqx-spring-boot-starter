@@ -6,9 +6,20 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author alotuser
  * @since 2025/5/10
  */
-@ConfigurationProperties(prefix = "emqx.mqtt")
+@ConfigurationProperties(prefix = MqttProperties.PREFIX)
 public class MqttProperties {
 
+	
+	/**
+	 * 配置前缀
+	 */
+	public static final String PREFIX = "emqx.mqtt";
+	/**
+	 * 是否启用，默认：true
+	 */
+	private boolean enabled = true;
+	
+	// 基本配置
 	private String serverUri = "tcp://localhost:1883";
 	private String clientId;
 	private String username;
@@ -276,6 +287,14 @@ public class MqttProperties {
 
 	public void setCleanSession(boolean cleanSession) {
 		this.cleanSession = cleanSession;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public Ssl getSsl() {

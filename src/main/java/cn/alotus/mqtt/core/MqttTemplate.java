@@ -31,24 +31,48 @@ public class MqttTemplate {
 	private final MqttProperties properties;
 
 	
-	
+	/**
+	 * 使用订阅管理器初始化 MqttTemplate
+	 * 
+	 * @param subscriptionManager 订阅管理器
+	 */
 	public MqttTemplate(SubscriptionManager subscriptionManager) {
 		this.clientFactory = subscriptionManager.getClientFactory();
 		this.properties = clientFactory.getProperties();
 		this.publishRetryPolicy = new MqttRetryPolicy(properties.getRetry(), RetryPolicyType.PUBLISH);
 	}
+
+	/**
+	 * 使用客户端工厂初始化 MqttTemplate
+	 * 
+	 * @param clientFactory MQTT 客户端工厂
+	 */
 	public MqttTemplate(MqttClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 		this.properties = clientFactory.getProperties();
 		this.publishRetryPolicy = new MqttRetryPolicy(properties.getRetry(), RetryPolicyType.PUBLISH);
 	}
-	
+
+	/**
+	 * 使用客户端工厂和配置属性初始化 MqttTemplate
+	 * 
+	 * @param clientFactory MQTT 客户端工厂
+	 * @param properties    MQTT 配置属性
+	 */
 	public MqttTemplate(MqttClientFactory clientFactory, MqttProperties properties) {
 		this.clientFactory = clientFactory;
 		this.properties = properties;
 		this.publishRetryPolicy = new MqttRetryPolicy(properties.getRetry(), RetryPolicyType.PUBLISH);
 	}
 
+	/**
+	 * 发布消息到指定主题，支持重试机制
+	 * 
+	 * @param topic    主题
+	 * @param payload  消息负载
+	 * @param qos      服务质量等级
+	 * @param retained 是否保留消息
+	 */
 	public void publish(String topic, byte[] payload, int qos, boolean retained) {
 		PublishContext context = new PublishContext(topic, payload, qos, retained);
 
@@ -71,6 +95,13 @@ public class MqttTemplate {
 		}
 	}
 
+	/**
+	 * 执行实际的消息发布操作
+	 * 
+	 * @param context 发布上下文
+	 * @return 发布是否成功
+	 * @throws MqttException 如果发布过程中发生错误
+	 */
 	private boolean doPublish(PublishContext context) throws MqttException {
 		if (!clientFactory.isConnected()) {
 			throw new MqttException(MqttException.REASON_CODE_CLIENT_NOT_CONNECTED);
@@ -91,23 +122,58 @@ public class MqttTemplate {
 		}
 	}
 
-	// 异步发布
+	/**
+	 * 异步发布消息到指定主题
+	 * 
+	 * @param topic    主题
+	 * @param payload  消息负载
+	 * @param qos      服务质量等级
+	 * @param retained 是否保留消息
+	 * @return CompletableFuture 表示异步发布操作的结果
+	 */
 	public CompletableFuture<Void> publishAsync(String topic, byte[] payload, int qos, boolean retained) {
 		return CompletableFuture.runAsync(() -> publish(topic, payload, qos, retained));
 	}
 
+	/**
+	 * 重载的发布方法，支持字符串类型的消息负载
+	 * 
+	 * @param topic    主题
+	 * @param payload  字符串消息负载
+	 * @param qos      服务质量等级
+	 * @param retained 是否保留消息
+	 */
 	public void publish(String topic, String payload, int qos, boolean retained) {
 		publish(topic, payload.getBytes(StandardCharsets.UTF_8), qos, retained);
 	}
 
+	/**
+	 * 重载的发布方法，使用默认的 QoS 和不保留消息
+	 * 
+	 * @param topic   主题
+	 * @param payload 字符串消息负载
+	 */
 	public void publish(String topic, String payload) {
 		publish(topic, payload, 1, false);
 	}
 
+	/**
+	 * 重载的发布方法，使用默认的 QoS 和不保留消息
+	 * 
+	 * @param topic   主题
+	 * @param payload 消息负载
+	 */
 	public void publish(String topic, byte[] payload) {
 		publish(topic, payload, 1, false);
 	}
 
+	/**
+	 * 订阅指定主题，使用消息监听器处理接收到的消息
+	 * 
+	 * @param topic           主题
+	 * @param qos             服务质量等级
+	 * @param messageListener 消息监听器
+	 */
 	public void subscribe(String topic, int qos, IMqttMessageListener messageListener) {
 		if (!clientFactory.isConnected()) {
 			throw new IllegalStateException("MQTT client is not connected");
@@ -122,6 +188,11 @@ public class MqttTemplate {
 		}
 	}
 
+	/**
+	 * 取消订阅指定主题
+	 * 
+	 * @param topic 主题
+	 */
 	public void unsubscribe(String topic) {
 		if (!clientFactory.isConnected()) {
 			return;
@@ -135,7 +206,9 @@ public class MqttTemplate {
 		}
 	}
 
-	// 发布上下文类
+	/**
+	 * 内部类，封装发布消息的上下文信息
+	 */
 	private static class PublishContext {
 		private final String topic;
 		private final byte[] payload;

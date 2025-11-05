@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +37,13 @@ import cn.alotus.mqtt.listener.MqttMessageListenerProcessor;
  * @author  alotuser
  * @since 2025/5/10
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
+@ConditionalOnProperty(
+		prefix = MqttProperties.PREFIX,
+		name = "enabled",
+		havingValue = "true",
+		matchIfMissing = false
+	)
 @EnableConfigurationProperties(MqttProperties.class)
 @ConditionalOnClass(MqttClient.class)
 public class MqttAutoConfiguration {
