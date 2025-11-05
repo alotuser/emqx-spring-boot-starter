@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cq.mqtt.config.MqttProperties;
+import com.cq.mqtt.retry.RetryPolicyType;
 import com.cq.mqtt.retry.RetryCallback;
 import com.cq.mqtt.retry.RetryExhaustedException;
 import com.cq.mqtt.retry.RetryPolicy;
@@ -30,23 +31,22 @@ public class MqttTemplate {
 	private final MqttProperties properties;
 
 	
-	private final String POLICY_TYPE="publish";
 	
 	public MqttTemplate(SubscriptionManager subscriptionManager) {
 		this.clientFactory = subscriptionManager.getClientFactory();
 		this.properties = clientFactory.getProperties();
-		this.publishRetryPolicy = new MqttRetryPolicy(properties.getRetry(), POLICY_TYPE);
+		this.publishRetryPolicy = new MqttRetryPolicy(properties.getRetry(), RetryPolicyType.PUBLISH);
 	}
 	public MqttTemplate(MqttClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 		this.properties = clientFactory.getProperties();
-		this.publishRetryPolicy = new MqttRetryPolicy(properties.getRetry(), POLICY_TYPE);
+		this.publishRetryPolicy = new MqttRetryPolicy(properties.getRetry(), RetryPolicyType.PUBLISH);
 	}
 	
 	public MqttTemplate(MqttClientFactory clientFactory, MqttProperties properties) {
 		this.clientFactory = clientFactory;
 		this.properties = properties;
-		this.publishRetryPolicy = new MqttRetryPolicy(properties.getRetry(), POLICY_TYPE);
+		this.publishRetryPolicy = new MqttRetryPolicy(properties.getRetry(), RetryPolicyType.PUBLISH);
 	}
 
 	public void publish(String topic, byte[] payload, int qos, boolean retained) {

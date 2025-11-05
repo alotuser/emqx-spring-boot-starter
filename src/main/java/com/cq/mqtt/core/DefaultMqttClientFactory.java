@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cq.mqtt.config.MqttProperties;
+import com.cq.mqtt.retry.RetryPolicyType;
 import com.cq.mqtt.retry.RetryCallback;
 import com.cq.mqtt.retry.RetryContext;
 import com.cq.mqtt.retry.RetryExhaustedException;
@@ -46,7 +47,7 @@ public class DefaultMqttClientFactory implements MqttClientFactory {
 		this.properties = properties;
 		this.connectOptions = connectOptions;
 		this.subscriptionManager = subscriptionManager;
-		this.connectRetryPolicy = new MqttRetryPolicy(properties.getRetry(), "connect");
+		this.connectRetryPolicy = new MqttRetryPolicy(properties.getRetry(), RetryPolicyType.CONNECT);
 		this.reconnectExecutor = Executors.newSingleThreadScheduledExecutor(r -> {
 			Thread t = new Thread(r, "mqtt-reconnect-thread");
 			t.setDaemon(true);

@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cq.mqtt.config.MqttProperties;
+import com.cq.mqtt.retry.RetryPolicyType;
 import com.cq.mqtt.retry.RetryContext;
 import com.cq.mqtt.retry.RetryPolicy;
 
@@ -19,9 +20,9 @@ public class MqttRetryPolicy implements RetryPolicy {
 	private static final Logger logger = LoggerFactory.getLogger(MqttRetryPolicy.class);
 
 	private final MqttProperties.Retry retryConfig;
-	private final String operationType; // "connect" or "publish"
+	private final RetryPolicyType operationType; // "connect" or "publish"
 
-	public MqttRetryPolicy(MqttProperties.Retry retryConfig, String operationType) {
+	public MqttRetryPolicy(MqttProperties.Retry retryConfig, RetryPolicyType operationType) {
 		this.retryConfig = retryConfig;
 		this.operationType = operationType;
 	}
@@ -75,23 +76,23 @@ public class MqttRetryPolicy implements RetryPolicy {
 	}
 
 	private boolean isRetryEnabled() {
-		return "connect".equals(operationType) ? retryConfig.isEnableConnectRetry() : retryConfig.isEnablePublishRetry();
+		return operationType.isConnect() ? retryConfig.isEnableConnectRetry() : retryConfig.isEnablePublishRetry();
 	}
 
 	private int getMaxAttempts() {
-		return "connect".equals(operationType) ? retryConfig.getMaxConnectAttempts() : retryConfig.getMaxPublishAttempts();
+		return operationType.isConnect() ? retryConfig.getMaxConnectAttempts() : retryConfig.getMaxPublishAttempts();
 	}
 
 	private long getBaseInterval() {
-		return "connect".equals(operationType) ? retryConfig.getConnectRetryInterval() : retryConfig.getPublishRetryInterval();
+		return operationType.isConnect() ? retryConfig.getConnectRetryInterval() : retryConfig.getPublishRetryInterval();
 	}
 
 	private long getMaxInterval() {
-		return "connect".equals(operationType) ? retryConfig.getMaxConnectRetryInterval() : retryConfig.getMaxPublishRetryInterval();
+		return operationType.isConnect() ? retryConfig.getMaxConnectRetryInterval() : retryConfig.getMaxPublishRetryInterval();
 	}
 
 	private double getMultiplier() {
-		return "connect".equals(operationType) ? retryConfig.getConnectRetryMultiplier() : retryConfig.getPublishRetryMultiplier();
+		return operationType.isConnect() ? retryConfig.getConnectRetryMultiplier() : retryConfig.getPublishRetryMultiplier();
 	}
 
 	private boolean shouldRetryForException(Exception exception) {
