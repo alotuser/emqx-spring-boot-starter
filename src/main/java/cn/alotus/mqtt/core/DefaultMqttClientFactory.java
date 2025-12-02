@@ -12,6 +12,8 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.MqttSecurityException;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,7 +67,7 @@ public class DefaultMqttClientFactory implements MqttClientFactory {
 					clientId = "mqtt-client-" + System.currentTimeMillis();
 				}
 
-				mqttClient = new MqttClient(properties.getServerUri(), clientId);
+				mqttClient = new MqttClient(properties.getServerUri(), clientId, new MemoryPersistence());
 
 				// 设置回调，处理连接状态变化
 				mqttClient.setCallback(new MqttCallbackExtended() {
@@ -137,8 +139,20 @@ public class DefaultMqttClientFactory implements MqttClientFactory {
 				public Boolean doWithRetry() throws Exception {
 					logger.info("Attempting to connect to MQTT broker...");
 					synchronized (connectionLock) {
-						mqttClient.connect(connectOptions);
+
+						try {
+							mqttClient.connect(connectOptions);
+
+						} catch (MqttException e) {
+
+							// 对于某些不可重试的错误，直接抛出异常
+							if (e.getReasonCode() != MqttException.REASON_CODE_CLIENT_CONNECTED) {
+								throw e;
+							}
+
+						}
 						connected = true;
+
 					}
 					return true;
 				}
